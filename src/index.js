@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 //import AppCounter from "./components/AppCounter";
 //import AppProducts from "./components/AppProducts";
 //import AppXY from "./AppXY";
-import AppMentor from "./AppMentor";
+//import AppMentor from "./AppMentor";
 import AppMentors from "./AppMentors";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
