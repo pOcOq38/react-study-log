@@ -1,44 +1,30 @@
-import React, { useReducer } from "react";
-import { personReducer } from "./reducer/person-reducer";
+import React, { useState } from "react";
+import { useImmer } from "use-immer";
 
-export default function AppMentor() {
-  // const [person, setPerson] = useState(initialPerson);
-  const [person, dispatch] = useReducer(personReducer, initialPerson);
+export default function AppMentorsImmer() {
+  const [person, updatePerson] = useImmer(initialPerson);
 
   const handleUpdate = () => {
     const prev = prompt(`Who would you change the name?`);
     const current = prompt(`Which name?`);
-    // setPerson((person) => ({
-    //   ...person,
-    //   mentors: person.mentors.map((mentor) => {
-    //     if (mentor.name === prev) {
-    //       return { ...mentor, name: current };
-    //     }
-    //     return mentor;
-    //   }),
-    // }));
-
-    //use dispatch instead of setPerson
-    dispatch({
-      type: "updated",
-      prev,
-      current,
+    updatePerson((person) => {
+      const mentor = person.mentors.find((m) => m.name === prev);
+      mentor.name = current;
     });
   };
   const handleAdd = () => {
-    const name = prompt(`멘토의 이름은?`);
-    const title = prompt(`멘토의 직함은?`);
-    dispatch({
-      type: "added",
-      name,
-      title,
+    const name = prompt(`Mentor's name?`);
+    const title = prompt(`Mentor's role?`);
+    updatePerson((person) => {
+      person.mentors.push({ name, title });
     });
   };
+
   const handleDelete = () => {
-    const name = prompt(`누구를 삭제하고 싶은가요?`);
-    dispatch({
-      type: "deleted",
-      name,
+    const name = prompt(`Who do you want to delete?`);
+    updatePerson((person) => {
+      const index = person.mentors.findIndex((m) => m.name === name);
+      person.mentors.splice(index, 1);
     });
   };
   return (
